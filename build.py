@@ -5,7 +5,7 @@ import os
 
 # Get vcpkg directory
 vcpkg_dir = os.path.dirname(os.path.realpath(__file__))
-vcpkg_dir = os.path.join(vcpkg_dir, "vcpkg")
+vcpkg_dir = os.path.join(vcpkg_dir, "vcpkg", "")
 
 # Get system and setup extension
 system = platform.system()
@@ -15,8 +15,7 @@ else:
    script_ext = ".sh"
 
 # Bootstrap vcpkg
-subprocess.run(["bootstrap-vcpkg" + script_ext], 
-   shell=True, cwd=vcpkg_dir)
+subprocess.run([vcpkg_dir + "bootstrap-vcpkg" + script_ext])
 
 # Read configuration
 json_file = open('config.json')
@@ -27,8 +26,7 @@ triplet_ext = ":" + config["default_triplet"][system]
 ports = [port + triplet_ext for port in config["ports"]]
 
 # Build ports
-subprocess.run(["vcpkg", "install"] + ports,
-   shell=True, cwd=vcpkg_dir)
+subprocess.run([vcpkg_dir + "vcpkg", "install"] + ports)
 
 # Export
-subprocess.run(["vcpkg", "export"] + ports + ["--zip"], shell=True, cwd=vcpkg_dir)
+subprocess.run([vcpkg_dir + "vcpkg", "export"] + ports + ["--zip"])
