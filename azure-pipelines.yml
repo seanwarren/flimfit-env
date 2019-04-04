@@ -42,3 +42,10 @@ steps:
   inputs:
     artifactName: 'flimfit-env'
     targetPath: 'flimfit-env.zip'
+
+- task: GithubRelease@0 
+  displayName: 'Create GitHub Release'
+  inputs:
+    githubConnection: seanwarren
+    repositoryName: seanwarren/flimfit-env
+    assets: *.zip
