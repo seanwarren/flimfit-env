@@ -43,7 +43,7 @@ file = os.path.realpath(m.group(1))
 
 # Create version name and rename file
 git_ver = subprocess.check_output(["git", "describe", "--abbrev=7"], encoding="ascii")
-new_file = os.path.join(env_dir, "flimfit-env-" + git_ver.strip() + ".zip")
-if os.path.exists(new_file):
+new_file = os.path.join(env_dir, "flimfit-env.zip")
+if os.path.exists(new_file):  
    os.remove(new_file)
 os.rename(file, new_file)
