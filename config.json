@@ -1,0 +1,20 @@
+{
+   "default_triplet": {
+      "Windows": "x64-windows-static",
+      "Darwin":  "x64-osx",
+      "Linux":   "x64-linux"   
+   },
+
+   "ports" :
+   [
+      "qt5-serialport",
+      "boost",
+      "dlib",
+      "omefiles",
+      "opencv",
+      "fftw3",
+      "bioimage[opencv]",
+      "libics",
+      "hdf5"
+   ]
+}
