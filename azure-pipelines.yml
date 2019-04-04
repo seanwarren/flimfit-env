@@ -48,4 +48,4 @@ steps:
   inputs:
     githubConnection: seanwarren
     repositoryName: seanwarren/flimfit-env
-    assets: *.zip
+    assets: '*.zip'
