@@ -19,5 +19,9 @@ pool:
   vmImage: $(imageName)
 
 steps:
+
+- script: 'git submodule update --init --recursive'
+  displayName: 'Checkout submodules'
+  
 - script: 'python build.py'
   displayName: 'Build vcpkg ports'
