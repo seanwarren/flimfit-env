@@ -41,4 +41,4 @@ steps:
 - task: PublishPipelineArtifact@0
   inputs:
     artifactName: 'flimfit-env'
-    targetPath: '*.zip'
+    targetPath: 'flimfit-env.zip'
