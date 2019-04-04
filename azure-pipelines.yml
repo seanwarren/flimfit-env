@@ -37,3 +37,8 @@ steps:
   
 - script: 'python build.py'
   displayName: 'Build vcpkg ports'
+
+- task: PublishPipelineArtifact@0
+  inputs:
+    artifactName: 'flimfit-env'
+    targetPath: '*.zip'
