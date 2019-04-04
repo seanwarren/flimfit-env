@@ -11,8 +11,10 @@ vcpkg_dir = os.path.join(vcpkg_dir, "vcpkg", "")
 system = platform.system()
 if system == "Windows":
    script_ext = ".bat"
+   exec_ext = ".exe"
 else:
    script_ext = ".sh"
+   exec_ext = ""
 
 # Bootstrap vcpkg
 subprocess.run([vcpkg_dir + "bootstrap-vcpkg" + script_ext])
@@ -26,9 +28,9 @@ triplet_ext = ":" + config["default_triplet"][system]
 ports = [port + triplet_ext for port in config["ports"]]
 
 # Build ports
-subprocess.run([vcpkg_dir + "vcpkg", "install"] + ports, 
+subprocess.run([vcpkg_dir + "vcpkg" + exec_ext, "install"] + ports, 
    cwd=vcpkg_dir)
 
 # Export
-subprocess.run([vcpkg_dir + "vcpkg", "export"] + ports + ["--zip"],
+subprocess.run([vcpkg_dir + "vcpkg" + exec_ext, "export"] + ports + ["--zip"],
    cwd=vcpkg_dir)
