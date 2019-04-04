@@ -30,7 +30,7 @@ steps:
     versionSpec: '3.7'
     architecture: 'x64'
 
-- script: $(setupCall)
+- script: '$(setupCall)'
   displayName: 'Setup environment'
 
 - script: 'git submodule update --init --recursive'
