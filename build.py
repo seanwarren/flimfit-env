@@ -30,5 +30,5 @@ subprocess.run([vcpkg_dir + "vcpkg", "install"] + ports,
    cwd=vcpkg_dir)
 
 # Export
-subprocess.run([vcpkg_dir + "vcpkg", "export"] + ports + ["--zip"]
+subprocess.run([vcpkg_dir + "vcpkg", "export"] + ports + ["--zip"],
    cwd=vcpkg_dir)
