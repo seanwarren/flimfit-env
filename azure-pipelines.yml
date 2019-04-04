@@ -17,6 +17,9 @@ strategy:
     windows:
       imageName: 'vs2017-win2016'
 
+variables:
+  VCPKG_ROOT: '$(Build.SourcesDirectory)/vcpkg'
+
 pool:
   vmImage: $(imageName)
 
