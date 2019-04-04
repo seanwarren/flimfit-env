@@ -5,8 +5,8 @@
 
 trigger:
 - master
-strategy:
 
+strategy:
   matrix:
     linux:
       imageName: 'ubuntu-16.04'
@@ -17,9 +17,6 @@ strategy:
 
 pool:
   vmImage: $(imageName)
-
-pool:
-  vmImage: 'Ubuntu-16.04'
 
 steps:
 - script: 'python build.py'
