@@ -17,7 +17,7 @@ else:
    exec_ext = ""
 
 # Bootstrap vcpkg
-subprocess.run([vcpkg_dir + "bootstrap-vcpkg" + script_ext])
+subprocess.run([vcpkg_dir + "bootstrap-vcpkg" + script_ext], check=True)
 
 # Read configuration
 json_file = open(os.path.join(env_dir, 'config.json'))
@@ -33,8 +33,8 @@ print("pwd: " + os.getcwd())
 
 # Build ports
 subprocess.run([vcpkg_dir + "vcpkg" + exec_ext, "install"] + ports, 
-   cwd=vcpkg_dir)
+   cwd=vcpkg_dir, check=True)
 
 # Export
 subprocess.run([vcpkg_dir + "vcpkg" + exec_ext, "export"] + ports + ["--zip"],
-   cwd=vcpkg_dir)
+   cwd=vcpkg_dir, check=True)
