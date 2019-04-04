@@ -10,13 +10,11 @@ strategy:
   matrix:
     linux:
       imageName: 'ubuntu-16.04'
-      setupCall: ''
     mac:
       imageName: 'macos-10.13'
-      setupCall: 'xcode-select --switch /Applications/Xcode_10.1.app'
+      DEVELOPER_DIR: '/Applications/Xcode_10.1.app'
     windows:
       imageName: 'vs2017-win2016'
-      setupCall: ''
 
 pool:
   vmImage: $(imageName)
@@ -29,9 +27,6 @@ steps:
   inputs:
     versionSpec: '3.7'
     architecture: 'x64'
-
-- script: '$(setupCall)'
-  displayName: 'Setup environment'
 
 - script: 'git submodule update --init --recursive'
   displayName: 'Checkout submodules'
