@@ -12,6 +12,8 @@
       "dlib",
       "opencv",
       "fftw3",
+      "omefiles",
+      "bioimage[opencv]",
       "libics",
       "hdf5"
    ]
