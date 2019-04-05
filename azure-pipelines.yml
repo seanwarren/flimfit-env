@@ -38,6 +38,16 @@ steps:
 - script: 'python build.py'
   displayName: 'Build vcpkg ports'
 
+- task: CopyFiles@2
+  inputs:
+    contents: 'vcpkg/buildtrees/*/*.log'
+    targetFolder: logs
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    pathtoPublish: logs
+    artifactName: vcpkg-logs
+
 - task: PublishPipelineArtifact@0
   inputs:
     artifactName: 'flimfit-env'
@@ -46,6 +56,6 @@ steps:
 - task: GithubRelease@0 
   displayName: 'Create GitHub Release'
   inputs:
-    githubConnection: seanwarren-github
-    repositoryName: seanwarren/flimfit-env
+    githubConnection: 'seanwarren-github'
+    repositoryName: 'seanwarren/flimfit-env'
     assets: '*.zip'
