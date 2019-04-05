@@ -23,10 +23,9 @@ variables:
 pool:
   vmImage: $(imageName)
 
-jobs:
-- job: Build
 
-  steps:
+steps:
+
   - task: UsePythonVersion@0
     inputs:
       versionSpec: '3.6'
@@ -38,6 +37,18 @@ jobs:
   - script: 'python build.py'
     displayName: 'Build vcpkg ports'
 
+  - task: CopyFiles@2
+    condition: always() 
+    inputs:
+      contents: 'vcpkg/buildtrees/*/*.log'
+      targetFolder: logs
+    
+  - task: PublishBuildArtifacts@1
+    condition: always() 
+    inputs:
+      pathtoPublish: logs
+      artifactName: vcpkg-logs
+    
   - task: PublishPipelineArtifact@0
     inputs:
       artifactName: 'flimfit-env'
@@ -49,18 +60,3 @@ jobs:
       githubConnection: seanwarren
       repositoryName: seanwarren/flimfit-env
       assets: '*.zip'
-
-- job: CopyLogs
-  dependsOn: Build
-  condition: failed()
-  
-  steps:
-  - task: CopyFiles@2
-    inputs:
-      contents: 'vcpkg/buildtrees/*/*.log'
-      targetFolder: logs
-
-  - task: PublishBuildArtifacts@1
-    inputs:
-      pathtoPublish: logs
-      artifactName: vcpkg-logs
