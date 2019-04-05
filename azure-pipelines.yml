@@ -6,59 +6,62 @@
 trigger:
 - master
 
-strategy:
-  matrix:
-    linux:
-      imageName: 'ubuntu-16.04'
-      CXX: '/usr/bin/clang++'
-      CC: '/usr/bin/clang'
-      buildPlatform: 'linux'
-    mac:
-      imageName: 'macos-10.13'
-      DEVELOPER_DIR: '/Applications/Xcode_10.1.app'
-      VCPKG_ALLOW_APPLE_CLANG: true
-      buildPlatform: 'osx'
-    windows:
-      imageName: 'vs2017-win2016'
-      buildPlatform: 'windows'
+jobs:
+- job: Build
+  timeoutInMinutes: 360
 
-variables:
-  VCPKG_ROOT: '$(Build.SourcesDirectory)/vcpkg'
+  strategy:
+    matrix:
+      linux:
+        imageName: 'ubuntu-16.04'
+        CXX: '/usr/bin/clang++'
+        CC: '/usr/bin/clang'
+        buildPlatform: 'linux'
+      mac:
+        imageName: 'macos-10.13'
+        DEVELOPER_DIR: '/Applications/Xcode_10.1.app'
+        VCPKG_ALLOW_APPLE_CLANG: true
+        buildPlatform: 'osx'
+      windows:
+        imageName: 'vs2017-win2016'
+        buildPlatform: 'windows'
 
-pool:
-  vmImage: $(imageName)
+  variables:
+    VCPKG_ROOT: '$(Build.SourcesDirectory)/vcpkg'
 
+  pool:
+    vmImage: $(imageName)
 
-steps:
+  steps:
 
-  - task: UsePythonVersion@0
-    inputs:
-      versionSpec: '3.6'
-      architecture: 'x64'
-    
-  - script: 'python build.py'
-    displayName: 'Build vcpkg ports'
+    - task: UsePythonVersion@0
+      inputs:
+        versionSpec: '3.6'
+        architecture: 'x64'
+      
+    - script: 'python build.py'
+      displayName: 'Build vcpkg ports'
 
-  - task: CopyFiles@2
-    condition: always() 
-    inputs:
-      contents: 'vcpkg/buildtrees/*/*.log'
-      targetFolder: logs
-    
-  - task: PublishBuildArtifacts@1
-    condition: always() 
-    inputs:
-      pathtoPublish: logs
-      artifactName: vcpkg-logs-$(buildPlatform)
-    
-  - task: PublishPipelineArtifact@0
-    inputs:
-      targetPath: 'flimfit-env.zip'
-      artifactName: 'flimfit-env-$(buildPlatform)'
+    - task: CopyFiles@2
+      condition: always() 
+      inputs:
+        contents: 'vcpkg/buildtrees/*/*.log'
+        targetFolder: logs
+      
+    - task: PublishBuildArtifacts@1
+      condition: always() 
+      inputs:
+        pathtoPublish: logs
+        artifactName: vcpkg-logs-$(buildPlatform)
+      
+    - task: PublishPipelineArtifact@0
+      inputs:
+        targetPath: 'flimfit-env.zip'
+        artifactName: 'flimfit-env-$(buildPlatform)'
 
-  - task: GithubRelease@0
-    displayName: 'Create GitHub Release'
-    inputs:
-      githubConnection: seanwarren
-      repositoryName: seanwarren/flimfit-env
-      assets: '*.zip'
+    - task: GithubRelease@0
+      displayName: 'Create GitHub Release'
+      inputs:
+        githubConnection: seanwarren
+        repositoryName: seanwarren/flimfit-env
+        assets: '*.zip'
