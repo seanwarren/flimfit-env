@@ -46,6 +46,6 @@ steps:
 - task: GithubRelease@0 
   displayName: 'Create GitHub Release'
   inputs:
-    githubConnection: 'seanwarren'
-    repositoryName: 'seanwarren/flimfit-env'
+    githubConnection: seanwarren-github
+    repositoryName: seanwarren/flimfit-env
     assets: '*.zip'
