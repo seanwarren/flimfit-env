@@ -18,7 +18,7 @@ else:
    exec_ext = ""
 
 # Bootstrap vcpkg
-subprocess.run([vcpkg_dir + "bootstrap-vcpkg" + script_ext], check=True)
+subprocess.run([vcpkg_dir + "bootstrap-vcpkg" + script_ext, "-allowAppleClang"], check=True)
 
 # Read configuration
 json_file = open(os.path.join(env_dir, 'config.json'))
