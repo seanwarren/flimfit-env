@@ -39,6 +39,11 @@ jobs:
         versionSpec: '3.6'
         architecture: 'x64'
       
+    - script: 'brew install gcc'
+      displayName: 'Install gcc'
+      condition: eq(variables['buildPlatform'],'osx')
+
+
     - script: 'python build.py'
       displayName: 'Build vcpkg ports'
 
