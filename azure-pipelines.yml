@@ -59,7 +59,7 @@ steps:
       artifactName: 'flimfit-env'
       targetPath: 'flimfit-env-$(system).zip'
 
-  - task: GithubRelease@1
+  - task: GithubRelease@0
     displayName: 'Create GitHub Release'
     inputs:
       githubConnection: seanwarren
