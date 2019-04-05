@@ -56,7 +56,7 @@ steps:
       targetPath: 'flimfit-env.zip'
       artifactName: 'flimfit-env-$(buildPlatform)'
 
-  - task: GithubRelease@1
+  - task: GithubRelease@0
     displayName: 'Create GitHub Release'
     inputs:
       githubConnection: seanwarren
