@@ -10,6 +10,8 @@ strategy:
   matrix:
     linux:
       imageName: 'ubuntu-16.04'
+      CXX: '/usr/bin/clang++'
+      CC: '/usr/bin/clang'
     mac:
       imageName: 'macos-10.13'
       DEVELOPER_DIR: '/Applications/Xcode_10.1.app'
