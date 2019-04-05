@@ -7,11 +7,6 @@
 
    "ports" :
    [
-      "libics"
-   ],
-
-   "other_ports" :
-   [
       "qt5-serialport",
       "boost",
       "dlib",
