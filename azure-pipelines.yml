@@ -12,15 +12,15 @@ strategy:
       imageName: 'ubuntu-16.04'
       CXX: '/usr/bin/clang++'
       CC: '/usr/bin/clang'
-      system: 'linux'
+      buildPlatform: 'linux'
     mac:
       imageName: 'macos-10.13'
       DEVELOPER_DIR: '/Applications/Xcode_10.1.app'
       VCPKG_ALLOW_APPLE_CLANG: true
-      system: 'osx'
+      buildPlatform: 'osx'
     windows:
       imageName: 'vs2017-win2016'
-      system: 'windows'
+      buildPlatform: 'windows'
 
 variables:
   VCPKG_ROOT: '$(Build.SourcesDirectory)/vcpkg'
@@ -35,9 +35,6 @@ steps:
     inputs:
       versionSpec: '3.6'
       architecture: 'x64'
-
-  - script: 'git submodule update --init --recursive'
-    displayName: 'Checkout submodules'
     
   - script: 'python build.py'
     displayName: 'Build vcpkg ports'
@@ -52,14 +49,14 @@ steps:
     condition: always() 
     inputs:
       pathtoPublish: logs
-      artifactName: vcpkg-logs-$(system)
+      artifactName: vcpkg-logs-$(buildPlatform)
     
   - task: PublishPipelineArtifact@0
     inputs:
-      artifactName: 'flimfit-env'
-      targetPath: 'flimfit-env-$(system).zip'
+      targetPath: 'flimfit-env.zip'
+      artifactName: 'flimfit-env-$(buildPlatform)'
 
-  - task: GithubRelease@0
+  - task: GithubRelease@1
     displayName: 'Create GitHub Release'
     inputs:
       githubConnection: seanwarren
