@@ -29,7 +29,7 @@ triplet_ext = ":" + config["default_triplet"][system]
 ports = [port + triplet_ext for port in config["ports"]]
 
 # Build ports
-subprocess.run([vcpkg_dir + "vcpkg" + exec_ext, "install"] + ports, 
+subprocess.run([vcpkg_dir + "vcpkg" + exec_ext, "install", "--clean-after-build"] + ports, 
    cwd=vcpkg_dir, check=True)
 
 # Export ports
