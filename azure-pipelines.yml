@@ -23,39 +23,44 @@ variables:
 pool:
   vmImage: $(imageName)
 
+jobs:
+- job: Build
 
+  steps:
+  - task: UsePythonVersion@0
+    inputs:
+      versionSpec: '3.6'
+      architecture: 'x64'
 
-steps:
+  - script: 'git submodule update --init --recursive'
+    displayName: 'Checkout submodules'
+    
+  - script: 'python build.py'
+    displayName: 'Build vcpkg ports'
 
-- task: UsePythonVersion@0
-  inputs:
-    versionSpec: '3.6'
-    architecture: 'x64'
+  - task: PublishPipelineArtifact@0
+    inputs:
+      artifactName: 'flimfit-env'
+      targetPath: 'flimfit-env.zip'
 
-- script: 'git submodule update --init --recursive'
-  displayName: 'Checkout submodules'
+  - task: GithubRelease@0 
+    displayName: 'Create GitHub Release'
+    inputs:
+      githubConnection: seanwarren
+      repositoryName: seanwarren/flimfit-env
+      assets: '*.zip'
+
+- job: CopyLogs
+  dependsOn: Build
+  condition: failed()
   
-- script: 'python build.py'
-  displayName: 'Build vcpkg ports'
+  steps:
+  - task: CopyFiles@2
+    inputs:
+      contents: 'vcpkg/buildtrees/*/*.log'
+      targetFolder: logs
 
-- task: CopyFiles@2
-  inputs:
-    contents: 'vcpkg/buildtrees/*/*.log'
-    targetFolder: logs
-
-- task: PublishBuildArtifacts@1
-  inputs:
-    pathtoPublish: logs
-    artifactName: vcpkg-logs
-
-- task: PublishPipelineArtifact@0
-  inputs:
-    artifactName: 'flimfit-env'
-    targetPath: 'flimfit-env.zip'
-
-- task: GithubRelease@0 
-  displayName: 'Create GitHub Release'
-  inputs:
-    githubConnection: seanwarren
-    repositoryName: seanwarren/flimfit-env
-    assets: '*.zip'
+  - task: PublishBuildArtifacts@1
+    inputs:
+      pathtoPublish: logs
+      artifactName: vcpkg-logs
