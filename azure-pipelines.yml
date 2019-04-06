@@ -39,8 +39,8 @@ jobs:
         versionSpec: '3.6'
         architecture: 'x64'
       
-    - script: 'brew install gcc'
-      displayName: 'Install gcc'
+    - script: 'brew install gcc 7z'
+      displayName: 'Install brew dependencies'
       condition: eq(variables['buildPlatform'],'osx')
 
 
