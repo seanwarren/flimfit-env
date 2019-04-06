@@ -18,7 +18,7 @@ else:
    exec_ext = ""
 
 # Bootstrap vcpkg
-subprocess.run([vcpkg_dir + "bootstrap-vcpkg" + script_ext, "-allowAppleClang"], check=True)
+subprocess.run([vcpkg_dir + "bootstrap-vcpkg" + script_ext], check=True)
 
 # Read configuration
 json_file = open(os.path.join(env_dir, 'config.json'))
@@ -33,17 +33,17 @@ subprocess.run([vcpkg_dir + "vcpkg" + exec_ext, "install", "--clean-after-build"
    cwd=vcpkg_dir, check=True)
 
 # Export ports
-out = subprocess.check_output([vcpkg_dir + "vcpkg" + exec_ext, "export"] + ports + ["--zip"],
-         cwd=vcpkg_dir, encoding="ascii")
-print(out)
+out = subprocess.run([vcpkg_dir + "vcpkg" + exec_ext, "export"] + ports + ["--zip"],
+         cwd=vcpkg_dir, encoding="ascii", stdout=subprocess.PIPE)
+print(out.stdout)
 
 # Get name of exported file
-m = re.search("Zip archive exported at: (.+)", out)
+m = re.search("Zip archive exported at: (.+)", out.stdout)
 file = os.path.realpath(m.group(1))
 
 # Create version name and rename file
-git_ver = subprocess.check_output(["git", "describe", "--abbrev=7"], encoding="ascii")
-new_file = os.path.join(env_dir, "flimfit-env.zip")
+git_ver = subprocess.check_output(["git", "describe", "--abbrev=7"], encoding="ascii").strip()
+new_file = os.path.join(env_dir, "flimfit-env-" + git_ver + ".zip")
 if os.path.exists(new_file):  
    os.remove(new_file)
 os.rename(file, new_file)
