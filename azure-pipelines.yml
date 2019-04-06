@@ -17,17 +17,17 @@ jobs:
         CXX: '/usr/bin/clang++'
         CC: '/usr/bin/clang'
         buildPlatform: 'linux'
-        fs: '/'
+        fs: /
       mac:
         imageName: 'macos-10.13'
         DEVELOPER_DIR: '/Applications/Xcode_10.1.app'
         VCPKG_ALLOW_APPLE_CLANG: true
         buildPlatform: 'osx'
-        fs: '/'
+        fs: /
       windows:
         imageName: 'vs2017-win2016'
         buildPlatform: 'windows'
-        fs: '\\'
+        fs: \
 
   variables:
     VCPKG_ROOT: '$(Build.SourcesDirectory)/vcpkg'
