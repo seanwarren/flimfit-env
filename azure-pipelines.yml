@@ -17,21 +17,18 @@ jobs:
         CXX: '/usr/bin/clang++'
         CC: '/usr/bin/clang'
         buildPlatform: 'linux'
-        fs: /
       mac:
         imageName: 'macos-10.13'
         DEVELOPER_DIR: '/Applications/Xcode_10.1.app'
         VCPKG_ALLOW_APPLE_CLANG: true
         buildPlatform: 'osx'
-        fs: /
       windows:
         imageName: 'vs2017-win2016'
         buildPlatform: 'windows'
-        fs: \
 
   variables:
     VCPKG_ROOT: '$(Build.SourcesDirectory)/vcpkg'
-    archiveFile: $(Build.ArtifactStagingDirectory)$(fs)flimfit-env-$(buildPlatform).7z
+    archiveFile: $(Build.ArtifactStagingDirectory)/flimfit-env-$(buildPlatform).7z
 
   pool:
     vmImage: $(imageName)
@@ -55,8 +52,8 @@ jobs:
       condition: always() 
       inputs:
         contents: |
-          'vcpkg$(fs)buildtrees$(fs)*$(fs)*.log'
-          'vcpkg$(fs)buildtrees$(fs)*$(fs)*$(fs)CMakeFiles$(fs)*.log'
+          'vcpkg/buildtrees/*/*.log'
+          'vcpkg/buildtrees/*/*/CMakeFiles/*.log'
         targetFolder: logs
       
     - task: PublishBuildArtifacts@1
