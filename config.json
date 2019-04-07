@@ -7,7 +7,7 @@
 
    "ports" :
    [
-      "libics"
+      "omefiles"
    ],
 
    "all_ports" :
