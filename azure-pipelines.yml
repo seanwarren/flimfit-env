@@ -52,8 +52,8 @@ jobs:
       condition: always() 
       inputs:
         contents: |
-          'vcpkg/buildtrees/*/*.log'
-          'vcpkg/buildtrees/*/*/CMakeFiles/*.log'
+          vcpkg/buildtrees/*/*.log
+          vcpkg/buildtrees/*/*/CMakeFiles/*.log
         targetFolder: logs
       
     - task: PublishBuildArtifacts@1
