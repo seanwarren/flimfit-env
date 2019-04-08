@@ -7,11 +7,6 @@
 
    "ports" :
    [
-      "omefiles"
-   ],
-
-   "all_ports" :
-   [
       "qt5-serialport",
       "boost",
       "dlib",
@@ -20,6 +15,16 @@
       "omefiles",
       "bioimage[opencv]",
       "libics",
-      "hdf5"
+      "hdf5",
+      "boost-random",
+      "boost-serialization",
+      "boost-align",
+      "boost-interprocess",
+      "boost-bind",
+      "boost-function",
+      "boost-math",
+      "boost-accumulators",
+      "boost-filesystem",
+      "boost-property-tree"
    ]
 }
