@@ -45,7 +45,6 @@ jobs:
       inputs:
         versionSpec: '3.6'
         architecture: 'x64'
-      outputs:
 
       
     - script: brew install gcc p7zip
