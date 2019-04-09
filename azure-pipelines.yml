@@ -17,14 +17,20 @@ jobs:
         CXX: '/usr/bin/clang++'
         CC: '/usr/bin/clang'
         buildPlatform: 'linux'
+        buildScript: 'python build.py'
       mac:
         imageName: 'macos-10.13'
         DEVELOPER_DIR: '/Applications/Xcode_10.1.app'
         VCPKG_ALLOW_APPLE_CLANG: true
         buildPlatform: 'osx'
+        buildScript: |
+          export PATH=/usr/local/opt/curl/bin:/usr/local/bin:/usr/local/sbin:/Users/vsts/bin
+          echo $PATH
+          python build.py
       windows:
         imageName: 'vs2017-win2016'
         buildPlatform: 'windows'
+        buildScript: 'python build.py'
 
   variables:
     VCPKG_ROOT: '$(Build.SourcesDirectory)/vcpkg'
@@ -35,22 +41,17 @@ jobs:
 
   steps:
 
-    - script: 'echo $PATH'
-      displayName: 'echo path'
-
     - task: UsePythonVersion@0
       inputs:
         versionSpec: '3.6'
         architecture: 'x64'
       
-    - script: |
-        brew install gcc p7zip
-        export PATH=/usr/local/opt/curl/bin:/usr/local/bin:/usr/local/sbin:/Users/vsts/bin
+    - script: brew install gcc p7zip
       displayName: 'Install brew dependencies'
       condition: eq(variables['buildPlatform'],'osx')
 
 
-    - script: 'python build.py'
+    - script: $(buildScript)
       displayName: 'Build vcpkg ports'
 
     - task: CopyFiles@2
