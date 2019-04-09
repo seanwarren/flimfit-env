@@ -65,13 +65,13 @@ jobs:
     - task: ArchiveFiles@2
       inputs:
         rootFolderOrFile: 'vcpkg'
-        archiveType: '7z'
+        archiveType: 'zip'
         archiveFile: $(archiveFile)
 
     - task: PublishPipelineArtifact@0
       inputs:
         targetPath: $(archiveFile)
-        artifactName: 'flimfit-env-$(buildPlatform).7z'
+        artifactName: 'flimfit-env-$(buildPlatform).zip'
 
     - task: GithubRelease@0
       displayName: 'Create GitHub Release'
