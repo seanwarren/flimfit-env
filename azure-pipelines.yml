@@ -24,7 +24,7 @@ jobs:
         VCPKG_ALLOW_APPLE_CLANG: true
         buildPlatform: 'osx'
         buildScript: |
-          export PATH=/usr/local/opt/curl/bin:/usr/local/bin:/usr/local/sbin:/Users/vsts/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/vsts/.azcopy
+          export PATH=/usr/local/opt/curl/bin:/usr/local/bin:/usr/local/sbin:/Users/vsts/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/vsts/.azcopy:$(pythonLocation)
           echo $PATH
           python build.py
       windows:
@@ -45,6 +45,8 @@ jobs:
       inputs:
         versionSpec: '3.6'
         architecture: 'x64'
+      outputs:
+
       
     - script: brew install gcc p7zip
       displayName: 'Install brew dependencies'
