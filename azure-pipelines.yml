@@ -22,7 +22,6 @@ jobs:
         DEVELOPER_DIR: '/Applications/Xcode_10.1.app'
         VCPKG_ALLOW_APPLE_CLANG: true
         buildPlatform: 'osx'
-        PATH: '/usr/local/opt/curl/bin:/usr/local/bin:/usr/local/sbin:/Users/vsts/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/vsts/.azcopy'
 
       windows:
         imageName: 'vs2017-win2016'
