@@ -3,6 +3,7 @@ import subprocess
 import platform
 import os
 import re
+import shutil
 
 # Get vcpkg directory
 env_dir = os.path.dirname(os.path.realpath(__file__))
@@ -21,7 +22,7 @@ else:
 subprocess.run([vcpkg_dir + "bootstrap-vcpkg" + script_ext], check=True)
 
 # Read configuration
-json_file = open(os.path.join(env_dir, 'config.json'))
+json_file = open(os.path.join(env_dir, "config.json"))
 config = json.load(json_file)
 
 # Setup ports
@@ -31,4 +32,6 @@ ports = [port + triplet_ext for port in config["ports"]]
 # Build ports
 subprocess.run([vcpkg_dir + "vcpkg" + exec_ext, "install", "--clean-after-build"] + ports, 
    cwd=vcpkg_dir, check=True)
-   
+
+# Delete tools directory
+shutil.rmtree(os.path.join(vcpkg_dir, "downloads"))
