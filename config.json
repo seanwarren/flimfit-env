@@ -5,7 +5,12 @@
       "Linux":   "x64-linux"   
    },
 
-   "ports" :
+   "ports":
+   [
+      "bioimage[opencv]"
+   ],
+
+   "others":
    [
       "qt5-serialport",
       "boost",
