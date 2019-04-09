@@ -7,11 +7,6 @@
 
    "ports":
    [
-      "bioimage[opencv]"
-   ],
-
-   "others":
-   [
       "qt5-serialport",
       "boost",
       "dlib",
