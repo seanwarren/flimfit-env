@@ -61,7 +61,16 @@ jobs:
       inputs:
         pathtoPublish: logs
         artifactName: vcpkg-logs-$(buildPlatform)
-      
+
+    # Copy git folder so we can use artifact as proper repo
+    - task: DeleteFiles@1
+      inputs:
+        contents: 'vcpkg/.git' 
+    - task: CopyFiles@2
+      inputs:
+        contents: '.git'
+        targetFolder: vcpkg/.git
+
     - task: ArchiveFiles@2
       inputs:
         rootFolderOrFile: 'vcpkg'
