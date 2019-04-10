@@ -68,19 +68,19 @@ jobs:
         contents: 'vcpkg/.git' 
     - task: CopyFiles@2
       inputs:
-        contents: '.git'
+        contents: '.git/modules/vcpkg/**/*'
         targetFolder: vcpkg/.git
+
+    - task: PublishPipelineArtifact@0
+      inputs:
+        targetPath: 'vcpkg'
+        artifactName: 'flimfit-env-$(buildPlatform).zip'
 
     - task: ArchiveFiles@2
       inputs:
         rootFolderOrFile: 'vcpkg'
-        archiveType: 'zip'
+        archiveType: '7z'
         archiveFile: $(archiveFile)
-
-    - task: PublishPipelineArtifact@0
-      inputs:
-        targetPath: $(archiveFile)
-        artifactName: 'flimfit-env-$(buildPlatform).zip'
 
     - task: GithubRelease@0
       displayName: 'Create GitHub Release'
